@@ -330,7 +330,6 @@ EXTERNAL_PING_THRESHOLD = int(os.environ.get("EXTERNAL_PING_THRESHOLD", 1))
 ![image](https://github.com/user-attachments/assets/866a289b-b859-43f5-ae66-a2332b6789ba)
 
 
-
 ![image](https://github.com/user-attachments/assets/d6d84f51-1621-4018-8e14-c5addc40f880)
 
 
@@ -349,7 +348,13 @@ EXTERNAL_PING_THRESHOLD = int(os.environ.get("EXTERNAL_PING_THRESHOLD", 1))
 
 
 
-# Successfully deployed cloud fucntion 
+![image](https://github.com/user-attachments/assets/0df04146-493f-4c27-9fb2-8d4a7026f396)
+
+
+
+
+
+# Successfully deployed cloud function
 
 
 ![image](https://github.com/user-attachments/assets/473a7d8b-4cd6-4bcc-b966-3d9e0889c3f6)
@@ -360,6 +365,7 @@ EXTERNAL_PING_THRESHOLD = int(os.environ.get("EXTERNAL_PING_THRESHOLD", 1))
 
 
 
+![image](https://github.com/user-attachments/assets/58f6be0d-ddbd-4ef1-8ab6-f0f1bd690905)
 
 
 
@@ -369,5 +375,369 @@ EXTERNAL_PING_THRESHOLD = int(os.environ.get("EXTERNAL_PING_THRESHOLD", 1))
 
 
 
+
+# Step 5  Schedule the Function to Run Every 30 Seconds 
+
+
+## 5.1 : Create a Cloud Scheduler Job
+
+-  Google Cloud Scheduler will invoke the Cloud Function every 30 seconds.
+
+  ``` bash
+
+gcloud scheduler jobs create http monitor-job \  # Creates a Cloud Scheduler job named 'monitor-job'
+    --schedule "*/30 * * * *" \  # Runs every 30 minutes (Cron format)
+    --uri "https://us-central1-dev-project-449909.cloudfunctions.net/consecutive_failure_monitor" \  # URL of the Cloud Function to trigger
+    --http-method GET \  # Uses an HTTP GET request to call the function
+    --time-zone "UTC" \  # Sets the time zone to UTC
+    --location "us-central1"  # Specifies the region where the job will run
+
+
+``` 
+
+- This runs the function every 30 seconds
+
+      
+
+![image](https://github.com/user-attachments/assets/f5504120-8af6-4693-b8be-682797613ded)
+
+
+
+- Now, your Cloud Function will be automatically triggered every 30 minutes
+
+- If you need to check logs or verify execution, you can run:
+
+  ```bash
+
+  gcloud scheduler jobs describe monitor-job --location "us-central1"
+
+```
+
+
+![image](https://github.com/user-attachments/assets/6f5faa53-0d9e-4160-ad22-a4650ef249eb)
+
+
+- or check logs in Cloud Logging:
+
+
+```bash
+
+gcloud logging read "resource.type=cloud_scheduler_job AND resource.labels.job_id=monitor-job" --limit 10
+
+```
+
+
+
+
+
+
+
+
+
+# Validation :
+
+### Test Your Function (Publicly Accessible)
+
+
+```bash
+curl -X POST https://us-central1-dev-project-449909.cloudfunctions.net/consecutive_failure_monitor
+
+```
+
+![image](https://github.com/user-attachments/assets/8b7eeef2-5fa6-4348-9284-b12a493bfba2)
+
+
+- If successful, it should return OK with status 200.
+- If there's an issue, it will return Error: <message> with status 500.
+
+### check logs:
+
+``` bash
+
+gcloud functions logs read consecutive_failure_monitor --region=us-central1
+
+```
+
+- This will show whether the function is properly detecting failures and publishing messages to Pub/Sub.
+
+
+### Logs 
+
+```bash
+
+sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$ gcloud functions logs read consecutive_failure_monitor --region=us-central1
+LEVEL: Iumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$ gcloud functions logs read consecutive_failure_monitor --region=us-central1
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:16:50.851
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:16:16.195
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:15:28.000
+LOG: Default STARTUP TCP probe succeeded after 1 attempt for container "worker" on port 8080.
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:15:26.077
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:05.292
+LOG: E0000 00:00:1741553465.293242       1 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:05.292
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:01.804
+LOG: E0000 00:00:1741553461.804403      13 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:01.804
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:35:57.390
+LOG: Default STARTUP TCP probe succeeded after 1 attempt for container "worker" on port 8080.
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:46.055
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:45.944
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:45.314
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.878
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.767
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.334
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:37.251
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:37.167
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:36.178
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 19:50:07.645
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 19:50:07.568
+LOG: Container called exit(1).
+sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$
+
+
+```
+
+
+### Check Pub/Sub Messages (If Disaster Alert Triggered)
+
+- If your function should publish messages to Pub/Sub, verify if messages are being sent:
+
+```bash
+
+  gcloud pubsub subscriptions pull projects/dev-project-449909/subscriptions/YOUR_SUBSCRIPTION_NAME --auto-ack
+
+```
+
+ - Replace YOUR_SUBSCRIPTION_NAME with your actual Pub/Sub subscription.
+
+
+
+![image](https://github.com/user-attachments/assets/ba186e33-d33a-4f2d-8ea0-75d65f84db18)
+
+
+
+
+# Commands:
+
+```bash
+
+   74  ls -lrth
+   75  cd gcp-health-monitoring/
+   76  clear
+   77  ls -lrth
+   78  vi main.py
+   79  cat main.py 
+   80  cleart
+   81  touch requirements.txt
+   82  ls -lrth
+   83  rm requirements.txt 
+   84  clear
+   85  to
+   86  touch requirements.txt
+   87  ls -lrth
+   88  vi requirements.txt 
+   89  cat requirements.txt 
+   90  vi requirements.txt 
+   91  cat requirements.txt 
+   92  gcloud functions deploy consecutive-failure-monitor     --runtime python310     --trigger-http     --allow-unauthenticated     --set-env-vars PUBSUB_TOPIC=disaster-alert     --region us-central1
+   93  vi requirements.txt 
+   94  pip list | grep functions-framework
+   95  pip install functions-framework
+   96  pip list | grep functions-framework
+   97  gcloud functions deploy consecutive-failure-monitor     --project dev-project-449909     --runtime python310     --trigger-http     --allow-unauthenticated     --set-env-vars PUBSUB_TOPIC=disaster-alert     --region us-central1
+   98  vi main.py 
+   99  gcloud functions deploy consecutive-failure-monitor     --project dev-project-449909     --runtime python310     --trigger-http     --allow-unauthenticated     --set-env-vars PUBSUB_TOPIC=disaster-alert     --region us-central1
+  100  cat main.py 
+  101  cat requirements.txt 
+  102  functions-framework --target=consecutive_failure_monitor --port=8080
+  103  ls
+  104  functions-framework --target=consecutive_failure_monitor --port=8080 --debug
+  105  pip show functions-framework
+  106  gcloud functions delete consecutive-failure-monitor --region=us-central1
+  107  gcloud functions deploy consecutive-failure-monitor     --project dev-project-449909     --runtime python310     --trigger-http     --allow-unauthenticated     --set-env-vars PUBSUB_TOPIC=disaster-alert     --region us-central1     --entry-point=consecutive_failure_monitor
+  108  vi main.py 
+  109  pip install -r requirements.txt --upgrade
+  110  pip show functions-framework
+  111  functions-framework --target=consecutive_failure_monitor --port=8080
+  112  ls -l ~/gcp-health-monitoring
+  113  grep "def consecutive_failure_monitor" ~/gcp-health-monitoring/main.py
+  114  python3 -c "import main; print(dir(main))"
+  115  vi main.py 
+  116  cat main.py 
+  117  vi main.py 
+  118  cat main.py 
+  119  gcloud functions deploy consecutive_failure_monitor   --runtime python311   --trigger-http   --allow-unauthenticated   --region=us-central1
+  120  ls -lrth
+  121  cat requirements.txt 
+  122  cd _
+  123  cd __pycache__
+  124  ls
+  125  cd ..
+  126  ls -lrth
+  127  cd __pycache__
+  128  ls -lrth
+  129  cat main.cpython-312.pyc 
+  130  cd ..
+  131  ls -lrth
+  132  cd __pycache__
+  133  ls -lrth
+  134  history
+```
 
 
