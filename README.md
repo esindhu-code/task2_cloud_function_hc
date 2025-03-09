@@ -40,6 +40,7 @@ gcloud services enable cloudfunctions.googleapis.com \
    - monitoring.googleapis.com → Enables Cloud Monitoring.
 
 
+
    ![image](https://github.com/user-attachments/assets/c4531bed-9977-4eeb-b553-247f23b35e97)
 
 
@@ -55,6 +56,7 @@ gcloud services enable cloudfunctions.googleapis.com \
 
 ```bash
 gcloud pubsub topics create disaster-alert
+
 ```
 
    ## Explanation:
@@ -62,14 +64,17 @@ gcloud pubsub topics create disaster-alert
    - This creates a Pub/Sub topic named disaster-alert, which will be used to send alerts when a failure occurs
 
 
-    ![image](https://github.com/user-attachments/assets/c685cef4-fc56-4568-9550-620222388d77)
+
+![image](https://github.com/user-attachments/assets/c685cef4-fc56-4568-9550-620222388d77)
 
 
 
    - Confirm by running below command:
 
-```bash  
+```bash
+
 gcloud pubsub topics list
+
 ```
 
   ![image](https://github.com/user-attachments/assets/045a7303-d558-4058-b296-621018f0cac0)
@@ -85,31 +90,33 @@ gcloud pubsub topics list
 
 # Step 3 : Create a Pub/Sub Subscription
 
-
 - Run this command to create a subscription for the disaster-alert topic:
 
-  ```bash  
+```bash
 gcloud pubsub subscriptions create disaster-alert-sub \
     --topic=disaster-alert
 ```
 
 
 ## Explanation:
-   - disaster-alert-sub → This is the subscription name (you can choose a different name).
-   - --topic=disaster-alert → This subscribes to the disaster-alert topic, which the Cloud Function will publish alerts to.
+
+
+- disaster-alert-sub → This is the subscription name (you can choose a different name).
+- --topic=disaster-alert → This subscribes to the disaster-alert topic, which the Cloud Function will publish alerts to.
 
 
 ![image](https://github.com/user-attachments/assets/215ce22a-3cff-41f7-9e37-370aac5bb4bf)
 
 
-
   - Verify the subscription was created successfully:
 
-  ```bash 
+
+  ```bash
 gcloud pubsub subscriptions list
 ```
 
 ![image](https://github.com/user-attachments/assets/3cae19b8-d842-4de4-8dff-b2c262ea4f0a)
+
 
 
    - You should see disaster-alert-sub in the list.
@@ -178,7 +185,7 @@ touch requirements.txt
 - Add these dependencies:
 
 
-  ```bash
+```bash
   vi requirements.txt
 ```
 
@@ -187,6 +194,7 @@ touch requirements.txt
 functions-framework
 google-cloud-logging
 google-cloud-pubsub
+
 ```
 
 
@@ -407,7 +415,7 @@ gcloud scheduler jobs create http monitor-job \  # Creates a Cloud Scheduler job
 
 - If you need to check logs or verify execution, you can run:
 
-  ```bash
+ ```bash
 
   gcloud scheduler jobs describe monitor-job --location "us-central1"
 
