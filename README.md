@@ -654,6 +654,417 @@ sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$
 ```
 
 
+or 
+
+```bash
+
+gcloud functions logs read consecutive_failure_monitor --limit=50
+
+```
+
+
+- Understanding the Output:
+
+- If logs are displayed:
+
+- Look for "Published disaster alert to Pub/Sub" → This confirms the function detected a disaster condition.
+- Look for "OK" → Confirms the function successfully returned a 200 response.
+
+
+
+```bash
+
+sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$ gcloud functions logs read consecutive_failure_monitor --limit=50
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 22:15:15.398
+LOG: E0000 00:00:1741558515.399004       1 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 22:15:15.398
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 22:15:11.890
+LOG: E0000 00:00:1741558511.890263      13 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 22:15:11.890
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 22:00:01.302
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:47:05.703
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:46:59.114
+LOG: Default STARTUP TCP probe succeeded after 1 attempt for container "worker" on port 8080.
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:46:57.405
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:32:05.291
+LOG: E0000 00:00:1741555925.291768       1 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:32:05.291
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:32:01.797
+LOG: E0000 00:00:1741555921.797433      13 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:32:01.797
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:16:50.851
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:16:16.195
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:15:28.000
+LOG: Default STARTUP TCP probe succeeded after 1 attempt for container "worker" on port 8080.
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 21:15:26.077
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:05.292
+LOG: E0000 00:00:1741553465.293242       1 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:05.292
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:01.804
+LOG: E0000 00:00:1741553461.804403      13 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:51:01.804
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:35:57.390
+LOG: Default STARTUP TCP probe succeeded after 1 attempt for container "worker" on port 8080.
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:46.055
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:45.944
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:15:45.314
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.878
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.767
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:07:39.334
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:37.251
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:37.167
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 20:03:36.178
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 19:50:07.645
+LOG: Default STARTUP TCP probe failed 1 time consecutively for container "worker" on port 8080. The instance was not started.
+
+LEVEL: WARNING
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 19:50:07.568
+LOG: Container called exit(1).
+
+LEVEL: E
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 19:50:07.031
+LOG: Traceback (most recent call last):
+  File "/layers/google.python.pip/pip/bin/functions-framework", line 8, in <module>
+    sys.exit(_cli())
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1161, in __call__
+    return self.main(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1082, in main
+    rv = self.invoke(ctx)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 1443, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/click/core.py", line 788, in invoke
+    return __callback(*args, **kwargs)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/_cli.py", line 36, in _cli
+    app = create_app(target, source, signature_type)
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 395, in create_app
+    raise e from None
+  File "/layers/google.python.pip/pip/lib/python3.10/site-packages/functions_framework/__init__.py", line 376, in create_app
+    spec.loader.exec_module(source_module)
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/workspace/main.py", line 18, in <module>
+    publisher = pubsub_v1.PublisherClient()
+NameError: name 'pubsub_v1' is not defined
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:27:24.289
+LOG: E0000 00:00:1741519644.290213       1 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:27:24.289
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:27:20.987
+LOG: E0000 00:00:1741519640.988410      13 init.cc:232] grpc_wait_for_shutdown_with_timeout() timed out.
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:27:20.987
+LOG: WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: vxZadM61JZ6d
+TIME_UTC: 2025-03-09 11:12:11.427
+LOG: Published disaster alert to Pub/Sub: Disaster in primary region detected!
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:12:11.423
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:12:09.962
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:12:07.060
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:12:02.357
+LOG: 
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:12:00.269
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: n5uriIIlzLOR
+TIME_UTC: 2025-03-09 11:11:57.204
+LOG: Published disaster alert to Pub/Sub: Disaster in primary region detected!
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:11:57.197
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: PtlSoh3ZKaXL
+TIME_UTC: 2025-03-09 11:11:53.954
+LOG: Published disaster alert to Pub/Sub: Disaster in primary region detected!
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:11:53.949
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: hLHno607Tqdj
+TIME_UTC: 2025-03-09 11:11:50.479
+LOG: Published disaster alert to Pub/Sub: Disaster in primary region detected!
+
+LEVEL: I
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 
+TIME_UTC: 2025-03-09 11:11:50.473
+LOG: 
+
+LEVEL: 
+NAME: consecutive-failure-monitor
+EXECUTION_ID: 6bTVgmEHnZGC
+TIME_UTC: 2025-03-09 11:11:47.892
+LOG: Published disaster alert to Pub/Sub: Disaster in primary region detected!
+sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$ 
+
+```
+
+
+
+
 ### Check Pub/Sub Messages (If Disaster Alert Triggered)
 
 - If your function should publish messages to Pub/Sub, verify if messages are being sent:
@@ -741,3 +1152,7 @@ sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$
 ```
 
 
+
+
+
+# NOTE: Validation can be done in multiple ways, so we need to understand the concept
