@@ -1191,7 +1191,7 @@ after getting code 3 error
 
 ## need to test below:
 
-    - To ensure your Cloud Function (2nd Gen) deploys successfully without manually running pip commands, follow these best practices:
+- To ensure your Cloud Function (2nd Gen) deploys successfully without manually running pip commands, follow these best practices
 
 ✅ Solution: Include a requirements.txt File in Your Cloud Function Source Code
 Cloud Functions automatically install dependencies listed in requirements.txt during deployment. Make sure your function includes a properly formatted requirements.txt file in the same directory as your function code.
