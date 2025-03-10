@@ -1186,3 +1186,42 @@ after getting code 3 error
  ```
     then deploy cloud function 
 
+
+
+
+## need to test below:
+
+    - To ensure your Cloud Function (2nd Gen) deploys successfully without manually running pip commands, follow these best practices:
+
+✅ Solution: Include a requirements.txt File in Your Cloud Function Source Code
+Cloud Functions automatically install dependencies listed in requirements.txt during deployment. Make sure your function includes a properly formatted requirements.txt file in the same directory as your function code.
+
+1️⃣ Create or Update requirements.txt
+Ensure your requirements.txt includes the necessary dependencies:
+
+txt
+Copy
+Edit
+functions-framework==3.4.0
+google-cloud-logging==3.8.0
+google-cloud-pubsub==2.18.5
+✅ Solution: Use gcloud functions deploy with Automatic Dependency Installation
+When deploying with gcloud, Cloud Functions automatically installs dependencies from requirements.txt.
+
+Run the correct deployment command:
+
+bash
+Copy
+Edit
+gcloud functions deploy consecutive-failure-monitor \
+    --runtime python310 \
+    --trigger-http \
+    --allow-unauthenticated \
+    --set-env-vars PUBSUB_TOPIC=disaster-alert \
+    --region us-central1 \
+    --source .
+Why does this work?
+--source . tells Google Cloud to upload everything in the current directory, including requirements.txt.
+Cloud Functions automatically installs all required dependencies listed in requirements.txt.
+
+
