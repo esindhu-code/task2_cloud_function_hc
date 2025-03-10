@@ -11,13 +11,6 @@ this repository for task2_cloud_function_health check
 - Alert notifications via Cloud Monitoring
 
 
-## Create a Pub/Sub topic for disaster alerts.
-
-- Deploy a Cloud Function to monitor health metrics.
-- Schedule the Cloud Function to run every 30 seconds.
-- Set up log-based metrics and alerts.
-
-
 
 # Step 1: Enable Required APIs
 
