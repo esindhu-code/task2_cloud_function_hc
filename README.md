@@ -1157,3 +1157,34 @@ sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$
 
 
 # NOTE: Validation can be done in multiple ways, so we need to understand the concept
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Main troubleshooting  
+
+after getting code 3 error 
+
+
+    ```bash
+    
+    pip list | grep functions-framework
+    pip install functions-framework
+    pip list | grep functions-framework
+   
+    pip install -r requirements.txt --upgrade
+    pip show functions-framework
+
+    ```
+    then deploy cloud function 
+
