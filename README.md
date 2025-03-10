@@ -1176,15 +1176,13 @@ sravan_kumarp92@cloudshell:~/gcp-health-monitoring (dev-project-449909)$
 after getting code 3 error 
 
 
-    ```bash
-    
+ ```bash
     pip list | grep functions-framework
     pip install functions-framework
     pip list | grep functions-framework
    
     pip install -r requirements.txt --upgrade
     pip show functions-framework
-
-    ```
+ ```
     then deploy cloud function 
 
